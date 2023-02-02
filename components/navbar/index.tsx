@@ -26,7 +26,7 @@ const pages = [{
   href: '/explore'
 }]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const txtLogo = "COMMUNITY"
+// const txtLogo = "COMMUNITY"
 
 
 const Navbar = () => {
@@ -52,14 +52,14 @@ const Navbar = () => {
     palette: {
       mode: 'light',
       primary: {
-        main: '#101c1f',
+        main: '#15151596',
       },
     },
   });
 
   return (
     <>
-      <div className="mt-16"></div>
+      <div className="mt-16 p-1"></div>
       <ThemeProvider theme={darkTheme}>
         <AppBar position="fixed">
           <Container maxWidth="xl">
@@ -83,7 +83,10 @@ const Navbar = () => {
                 }}
                 className='cursor-default'
               >
-                {txtLogo}
+                <span className='textColorThem'>C</span>
+                OMM
+                <span className='textColorThem'>U</span>
+                NITY
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                 <IconButton
@@ -144,7 +147,10 @@ const Navbar = () => {
                 }}
                 className='cursor-default'
               >
-                {txtLogo}
+                <span className='textColorThem'>C</span>
+                OMM
+                <span className='textColorThem'>U</span>
+                NITY
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 {pages.map((page) => (
