@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  --color-them: #f99700;
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
@@ -165,17 +166,32 @@ a {
   }
 }
 
-.cursor-default {
-  cursor: default;
-}
-.cursor-pointer {
-  cursor: pointer;
-}
-
 .textColorThem {
-  color: #f99700;
+  color: var(--color-them);
+}
+.bgColorThem {
+  background-color: var(--color-them);
 }
 
 .container {
   margin: auto;
+}
+
+.text-hover{
+  transition: all .3s ease;
+}
+.text-hover:hover {
+  text-shadow: 0px 0px 5px var(--color-them);
+}
+.top-n-58 {
+  top: -58%;
+}
+.max-w-xl-38 {
+  max-width: 38rem;
+}
+.h-112{
+  height: 112%;
+}
+.max-h-100 {
+  max-height: 30rem;
 }
