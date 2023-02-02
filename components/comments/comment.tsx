@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { red } from '@mui/material/colors';
 import { useState } from 'react';
 import Reply from './reply';
+import SendComment from './sendComment';
 
 interface IProps {
   data: {
@@ -28,6 +29,7 @@ interface IProps {
 }
 const Comment = ({ data }: IProps) => {
   const [like, setLike] = useState<boolean>(false)
+  const [reply, setReply] = useState<boolean>(false)
 
   return (
     <>
@@ -56,16 +58,21 @@ const Comment = ({ data }: IProps) => {
                     <FavoriteBorderIcon className='cursor-pointer' onClick={() => setLike(!like)} />
                   </Tooltip>
                 )}
-                {like ? data.like++ : data.like}
+                {like ? `${data.like + 1}` : data.like}
               </span>
               <span className='flex gap-2 cursor-default'>
                 <Tooltip title="Reply">
-                  <ReplyIcon className='cursor-pointer' />
+                  <ReplyIcon className='cursor-pointer' onClick={() => setReply(!reply)} />
                 </Tooltip>
                 13
               </span>
             </div>
           </div>
+
+          {reply && (
+            <SendComment onClose={setReply} />
+          )}
+
         </div>
         <div>
           {data.reply.map(rep => (
