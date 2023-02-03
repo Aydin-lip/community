@@ -195,3 +195,6 @@ a {
 .max-h-100 {
   max-height: 30rem;
 }
+.bg-login{
+  background: linear-gradient(180deg, #0b0b0b 80%, #ed9304 200%);
+}
