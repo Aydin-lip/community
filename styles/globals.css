@@ -198,3 +198,30 @@ a {
 .bg-login{
   background: linear-gradient(180deg, #0b0b0b 80%, #ed9304 200%);
 }
+.anim-open-comment {
+  background: #1f1f21;
+  animation: openComment .3s ease both;
+}
+@keyframes openComment {
+  from {
+    top: 50%;
+    left: 50%;
+    right: 50%;
+    bottom: 50%;
+  }
+  to {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.-z-1 {
+  z-index: -1;
+}
+.show-reply{
+  top: 15%;
+  left: 45%;
+  background-color: #1f1f21;
+}

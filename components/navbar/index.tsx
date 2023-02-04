@@ -11,7 +11,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -26,8 +25,6 @@ const pages = [{
   href: '/explore'
 }]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-// const txtLogo = "COMMUNITY"
-
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -61,7 +58,7 @@ const Navbar = () => {
     <>
       <div className="mt-16 p-1"></div>
       <ThemeProvider theme={darkTheme}>
-        <AppBar position="fixed">
+        <AppBar>
           <Container maxWidth="xl">
             <Toolbar disableGutters>
 
@@ -120,7 +117,9 @@ const Navbar = () => {
                   {pages.map((page) => (
                     <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                       <Typography textAlign="center">
-                        <Link href={`${page.href}`}>{page.name}</Link>
+                        <Link href={`${page.href}`}>
+                          {page.name}
+                        </Link>
                       </Typography>
                     </MenuItem>
                   ))}
@@ -154,15 +153,13 @@ const Navbar = () => {
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 {pages.map((page) => (
-                  <Button
-                    key={page.name}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
-                  >
-                    <Link href={`${page.href}`}>
+                  <Link key={page.name} href={`${page.href}`} onClick={handleCloseNavMenu}>
+                    <Button
+                      sx={{ my: 2, color: 'white', display: 'block' }}
+                    >
                       {page.name}
-                    </Link>
-                  </Button>
+                    </Button>
+                  </Link>
                 ))}
               </Box>
 
@@ -170,7 +167,7 @@ const Navbar = () => {
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Aydin" src="./image/avatar.png" />
+                    <Avatar alt="Aydin" src="/image/avatar.png" />
                   </IconButton>
                 </Tooltip>
                 <Menu
