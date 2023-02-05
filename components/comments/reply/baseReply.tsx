@@ -19,7 +19,7 @@ const BaseReply = ({ data, link, href, sendReply, setSendReply }: IProps) => {
   return (
     <>
       <div className='flex items-center mb-4 gap-4'>
-        <Link href={data.user.username}>
+        <Link href={'/user/aydin'}>
           <Avatar src={data.user.avatar} alt={data.user.username} />
         </Link>
         <Link href={data.user.username}>{data.user.username}</Link>
