@@ -6,15 +6,15 @@ const Login = () => {
   const router = useRouter()
 
   useEffect(() => {
-    router.push("login/sign-in")
-    console.log(router)
+    const token = localStorage.getItem("token")
+    if (token) {
+      router.replace("/")
+    } else {
+      router.replace("login/sign-in")
+    }
   }, [])
 
-  return (
-    <>
-    
-    </>
-  );
+  return (<></>);
 }
 
 export default Login

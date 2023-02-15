@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,20 +15,48 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Link from 'next/link';
 import Image from 'next/image';
 import Logo from '@/public/image/logo/logo.png'
+import { getInfo } from '@/services/http.service';
+import axios from 'axios'
+import { useRouter } from 'next/router';
 
-// const pages = ['Products', 'Pricing', 'Blog'];
-const pages = [{
-  name: 'home',
-  href: '/'
-}, {
-  name: 'explore',
-  href: '/explore'
-}]
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [login, setLogin] = useState<boolean>(false);
+  const router = useRouter()
+
+  let pages = [{
+    name: 'home',
+    href: '/'
+  }, {
+    name: 'explore',
+    href: '/explore'
+  }]
+  let settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (token) {
+      getInfo(token)
+        .then(res => {
+          if (res.status === 200) {
+            console.log(res)
+            setLogin(true)
+          }
+        })
+        .catch(err => {
+          if (err.response.status === 404) {
+            localStorage.removeItem("token")
+            router.replace("/login")
+          } else {
+            alert('Please try again in a few minutes.')
+          }
+        })
+    } else {
+      router.replace("/login")
+    }
+  }, [])
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -114,7 +142,7 @@ const Navbar = () => {
                     display: { xs: 'block', md: 'none' },
                   }}
                 >
-                  {pages.map((page) => (
+                  {login && pages.map((page) => (
                     <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                       <Typography textAlign="center">
                         <Link href={`${page.href}`}>
@@ -152,7 +180,7 @@ const Navbar = () => {
                 NITY
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                {pages.map((page) => (
+                {login && pages.map((page) => (
                   <Link key={page.name} href={`${page.href}`} onClick={handleCloseNavMenu}>
                     <Button
                       sx={{ my: 2, color: 'white', display: 'block' }}
@@ -163,36 +191,37 @@ const Navbar = () => {
                 ))}
               </Box>
 
-
-              <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Aydin" src="/image/avatar.png" />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
+              {login &&
+                <Box sx={{ flexGrow: 0 }}>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt="Aydin" src="/image/avatar.png" />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {settings.map((setting) => (
+                      <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                        <Typography textAlign="center">{setting}</Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+              }
 
             </Toolbar>
           </Container>

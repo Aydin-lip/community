@@ -11,7 +11,7 @@ const Handler: NextApiHandler = async (req, res) => {
   const connectionFunc: Promise<mysql.Connection> = SqlConnection()
   const connection: mysql.Connection = await connectionFunc
 
-  if (req.method === "GET") {
+  if (req.method === "POST") {
     const { username, password }: { username: string, password: string } = req.body
     if (!username || !password) {
       res.status(400).json({ message: "parameter is false" })
