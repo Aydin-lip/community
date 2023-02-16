@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { signIn } from '@/services/http.service';
 import { useRouter } from 'next/router';
 import Alert from '@mui/material/Alert';
+import { useAppContext } from '@/context/state';
 
 const CssTextField = styled(TextField)({
   '& label': {
@@ -42,6 +43,7 @@ const SignIn = () => {
   const [login, setLogin] = useState<boolean>(false)
 
   const router = useRouter()
+  let context = useAppContext()
 
   useEffect(() => {
     const token = localStorage.getItem("token")
@@ -66,6 +68,7 @@ const SignIn = () => {
           setLoading(false)
           setUsername("")
           setPassword("")
+          context?.user.setInfo(res.data.user)
           localStorage.setItem("token", res.data.user.token)
           router.replace('/')
           setTimeout(() => {

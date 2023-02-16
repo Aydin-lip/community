@@ -16,8 +16,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Logo from '@/public/image/logo/logo.png'
 import { getInfo } from '@/services/http.service';
-import axios from 'axios'
 import { useRouter } from 'next/router';
+import { useAppContext } from '@/context/state';
 
 
 const Navbar = () => {
@@ -35,18 +35,19 @@ const Navbar = () => {
   }]
   let settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
+  let context = useAppContext()
   useEffect(() => {
     const token = localStorage.getItem("token")
     if (token) {
       getInfo(token)
         .then(res => {
-          if (res.status === 200) {
-            console.log(res)
+          if (res?.status === 200) {
             setLogin(true)
+            context?.user.setInfo(res.data.user)
           }
         })
         .catch(err => {
-          if (err.response.status === 404) {
+          if (err?.response?.status === 404) {
             localStorage.removeItem("token")
             router.replace("/login")
           } else {
