@@ -39,7 +39,7 @@ const Navbar = () => {
   useEffect(() => {
     const token = localStorage.getItem("token")
     if (token) {
-      getInfo(token)
+      getInfo()
         .then(res => {
           if (res?.status === 200) {
             setLogin(true)

@@ -4,7 +4,7 @@ import { NextApiHandler } from "next";
 import { isUuid } from "uuidv4";
 
 const Handler: NextApiHandler = async (req, res) => {
-  if (req.method === "GET") {
+  if (req.method === "POST") {
     const connection = await SqlConnection()
     const { token } = req.headers
     const { reply_token } = req.body

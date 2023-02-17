@@ -13,7 +13,7 @@ interface IReply extends RowDataPacket {
 }
 
 const Handler: NextApiHandler = async (req, res) => {
-  if (req.method === "GET") {
+  if (req.method === "POST") {
     const connection = await SqlConnection()
     const { reply_token } = req.body
     if (!reply_token || !isUuid(reply_token)) {
