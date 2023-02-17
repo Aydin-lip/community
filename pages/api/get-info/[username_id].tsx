@@ -7,9 +7,9 @@ import { TokenHandler } from "@/db/mysql/handler";
 const Handler: NextApiHandler = async (req, res) => {
   if (req.method === "GET") {
     const connection = await SqlConnection()
-    const { username } = req.query
+    const { username_id } = req.query
     const { token } = req.headers
-    if (!username || !token) {
+    if (!username_id || !token) {
       res.status(400).json({ message: "err header token or query" })
       return
     }
@@ -20,7 +20,7 @@ const Handler: NextApiHandler = async (req, res) => {
       return
     } else {
       try {
-        const results = await connection.query<IUserInfo[]>(`SELECT * FROM users_info WHERE username = '${username}'`)
+        const results = await connection.query<IUserInfo[]>(`SELECT * FROM users_info WHERE id = '${username_id}' OR username = '${username_id}'`)
         if (!results[0]?.[0]) {
           res.status(404).json({ message: "This username does not exist" })
           return

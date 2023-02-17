@@ -24,7 +24,7 @@ export const getInfo = () => {
   })
 }
 
-export const getInfoByUsername = (username: string) => {
+export const getInfoByUsernameId = (username: string | number) => {
   const token = localStorage.getItem("token")
   return httpService.get(`/get-info/${username}`, {
     headers: {
