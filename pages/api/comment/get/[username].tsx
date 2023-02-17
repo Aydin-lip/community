@@ -18,7 +18,7 @@ const Handler: NextApiHandler = async (req, res) => {
 
     let userID
     try {
-      const results = await connection.query<IUserId[]>(`SELECT id FROM users_info WHERE username = '${username}'`)
+      const results = await connection.query<IUserId[]>(`SELECT id FROM users_info WHERE username = '${username}' ORDER BY id DESC`)
       if (!results[0][0]?.id) {
         res.status(404).json({ message: "not found username" })
         return

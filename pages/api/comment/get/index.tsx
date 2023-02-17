@@ -8,7 +8,7 @@ const Handler: NextApiHandler = async (req, res) => {
   if (req.method === "GET") {
     connection.connect()
     try {
-      const results = await connection.query<IComment[]>("SELECT * FROM comments")
+      const results = await connection.query<IComment[]>("SELECT * FROM comments ORDER BY id DESC")
       res.status(200).json({ message: "Success", comments: results[0] })
     } catch (error) {
       res.status(500).json({ message: "faild query!" })

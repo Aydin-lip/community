@@ -79,7 +79,16 @@
 								"type": "text"
 							}
 						],
-						"url": "http://localhost:3000/api/get-info/its-mohammad"
+						"url": "http://localhost:3000/api/get-info/4"
+					},
+					"response": []
+				},
+				{
+					"name": "all-user-info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/api/get-info/all"
 					},
 					"response": []
 				}
@@ -276,6 +285,15 @@
 							}
 						},
 						"url": "http://localhost:3000/api/reply/delete"
+					},
+					"response": []
+				},
+				{
+					"name": "get-all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/api/reply/get/all"
 					},
 					"response": []
 				}

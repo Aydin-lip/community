@@ -21,7 +21,7 @@ const Handler: NextApiHandler = async (req, res) => {
       return
     }
     try {
-      const results = await connection.query<IReply[]>(`SELECT * FROM reply WHERE reply_token = '${reply_token}'`)
+      const results = await connection.query<IReply[]>(`SELECT * FROM reply WHERE reply_token = '${reply_token}' ORDER BY 'like' DESC`)
       if (!results[0][0]?.id) {
         res.status(404).json({ message: "not found reply by this token" })
         return

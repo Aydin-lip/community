@@ -1,80 +1,17 @@
 import BoxCommentHome from "@/components/comments/boxComment/home"
+import { ICommentt, IUserInfo, IReply, IFullComment, IReplyByUser } from "@/models/comment"
+import { getAllInfo, getAllReply, getComments } from "@/services/http.service"
 
-const Index = () => {
-  let comments = [
-    {
-      text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, eaque amet aspernatur delectus sunt deserunt in dolorum, accusantium ex vitae provident nostrum magni quaerat ipsum possimus inventore repellat sequi porro?",
-      user: {
-        avatar: "/image/avatar.png",
-        username: "aydin.lip"
-      },
-      like: 187,
-      reply: [{
-        text: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos, esse adipisci ea voluptatum eligendi modi reprehenderit delectus nostrum aliquid aut repellendus officia doloremque harum dolor aperiam ex nulla a ab.",
-        user: {
-          avatar: "/image/avatar.png",
-          username: "sixnine"
-        },
-        like: 7,
-        reply: [{
-          text: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos, esse adipisci ea voluptatum eligendi modi reprehenderit delectus nostrum aliquid aut repellendus officia doloremque harum dolor aperiam ex nulla a ab.",
-          user: {
-            avatar: "/image/avatar.png",
-            username: "sixnine"
-          },
-          like: 7,
-          reply: []
-        },{
-          text: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos, esse adipisci ea voluptatum eligendi modi reprehenderit delectus nostrum aliquid aut repellendus officia doloremque harum dolor aperiam ex nulla a ab.",
-          user: {
-            avatar: "/image/avatar.png",
-            username: "sixnine"
-          },
-          like: 7,
-          reply: [{
-            text: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos, esse adipisci ea voluptatum eligendi modi reprehenderit delectus nostrum aliquid aut repellendus officia doloremque harum dolor aperiam ex nulla a ab.",
-            user: {
-              avatar: "/image/avatar.png",
-              username: "sixnine"
-            },
-            like: 7,
-            reply: []
-          }]
-        }]
-      },{
-        text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, eaque amet aspernatur delectus sunt deserunt in dolorum.",
-        user: {
-          avatar: "/image/avatar.png",
-          username: "sixnine"
-        },
-        like: 7,
-        reply: [{
-          text: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos, esse adipisci ea voluptatum eligendi modi reprehenderit delectus nostrum aliquid aut repellendus officia doloremque harum dolor aperiam ex nulla a ab.",
-          user: {
-            avatar: "/image/avatar.png",
-            username: "sixnine"
-          },
-          like: 7,
-          reply: []
-        }]
-      },{
-        text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, eaque amet aspernatur delectus sunt deserunt in dolorum.",
-        user: {
-          avatar: "/image/avatar.png",
-          username: "sixnine"
-        },
-        like: 7,
-        reply: []
-      }]
-    }
-  ]
-
+interface IProps {
+  comments: IFullComment[]
+}
+const Index = ({ comments }: IProps) => {
   return (
     <>
       <div className="container">
         <div className="flex justify-center items-center gap-4 flex-col my-4">
-          {comments.map((comment, index) => (
-            <BoxCommentHome key={index} data={comment} />
+          {comments.map(comment => (
+            <BoxCommentHome key={comment.id} data={comment} />
           ))}
         </div>
       </div>
@@ -82,24 +19,40 @@ const Index = () => {
   )
 }
 
+export const getStaticProps = async () => {
+  let allComment: ICommentt[] = []
+  let allUser: IUserInfo[] = []
+  let allReply: IReply[] = []
+  try {
+    const resultComment = await getComments()
+    const resultInfo = await getAllInfo()
+    const resultReply = await getAllReply()
+    allComment = resultComment.data.comments
+    allUser = resultInfo.data.users
+    allReply = resultReply.data.reply
+  } catch (error) { }
+
+
+  let fullComments: IFullComment[] = []
+  allComment.map(comment => {
+    let user = allUser?.find(u => u.id === comment.id_user)
+    let reply = allReply.filter(r => r.reply_token === comment.token)
+    let fullReply: IReplyByUser[] = []
+    reply.map(r => {
+      let userReply = allUser?.find(u => u.id === r.id_user)
+      fullReply.push({...r, user: {username: userReply?.username || "", avatar: userReply?.avatar || ""}})
+    })
+    fullComments.push({ ...comment, user: { username: user?.username || "", avatar: user?.avatar || "" }, reply: fullReply })
+  })
+
+  return {
+    props: {
+      comments: fullComments
+    },
+    revalidate: 30
+  }
+
+}
+
+
 export default Index
-
-
-// user
-//   first name
-//   last name
-//   username
-//   birthday
-//   bio
-//   avatar
-//   email
-//   phone
-
-// comment
-//   user
-//     avatar
-//     username
-
-//   text
-//     like
-//     reply

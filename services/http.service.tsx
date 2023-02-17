@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const httpService = axios.create({
-  baseURL: "/api",
+  baseURL: "http://localhost:3000/api",
   headers: {
     'Content-type': 'application/json',
   },
@@ -22,6 +22,10 @@ export const getInfo = () => {
       token
     }
   })
+}
+
+export const getAllInfo = () => {
+  return httpService.get(`/get-info/all`)
 }
 
 export const getInfoByUsernameId = (username: string | number) => {
@@ -98,6 +102,10 @@ export const addReply = (data: { reply_token: string, text: string }) => {
 
 export const getReply = (data: { reply_token: string }) => {
   return httpService.post(`/reply/get`, data)
+}
+
+export const getAllReply = () => {
+  return httpService.get(`/reply/get/all`)
 }
 
 export const deleteReply = (data: { reply_token: string }) => {
