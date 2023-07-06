@@ -28,13 +28,17 @@ export const getAllInfo = () => {
   return httpService.get(`/get-info/all`)
 }
 
-export const getInfoByUsernameId = (username: string | number) => {
+export const getInfoById = (id: number) => {
   const token = localStorage.getItem("token")
-  return httpService.get(`/get-info/${username}`, {
+  return httpService.get(`/get-info/id/${id}`, {
     headers: {
       token
     }
   })
+}
+
+export const getInfoByUsernameId = (username_id: string | number) => {
+  return httpService.get(`/get-info/${username_id}`)
 }
 
 interface IUpdateInfo {
@@ -82,6 +86,10 @@ export const getCommentsByUsername = (username: string) => {
   return httpService.get(`/comment/get/${username}`)
 }
 
+export const getCommentByToken = (token: string) => {
+  return httpService.get(`/comment/get/token/${token}`)
+}
+
 export const deleteCommentById = (id: number) => {
   const token = localStorage.getItem("token")
   return httpService.get(`/comment/delete/${id}`, {
@@ -100,7 +108,7 @@ export const addReply = (data: { reply_token: string, text: string }) => {
   })
 }
 
-export const getReply = (data: { reply_token: string }) => {
+export const getReplyByToken = (data: { reply_token: string }) => {
   return httpService.post(`/reply/get`, data)
 }
 

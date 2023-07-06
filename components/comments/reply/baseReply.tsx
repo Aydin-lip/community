@@ -9,14 +9,15 @@ import { ICommentt } from '@/models/comment';
 
 interface IProps {
   user: { username: string, avatar: string }
-  comment: ICommentt
+  comment: { text: string, like: string }
   replyLength: number
   link: boolean
   href?: string
   sendReply: boolean
   setSendReply: Dispatch<SetStateAction<boolean>>
+  maxH?: boolean
 }
-const BaseReply = ({ user, comment, replyLength, link, href, sendReply, setSendReply }: IProps) => {
+const BaseReply = ({ user, comment, replyLength, link, href, sendReply, setSendReply, maxH }: IProps) => {
   const [like, setLike] = useState<boolean>(false)
   return (
     <>
@@ -29,10 +30,10 @@ const BaseReply = ({ user, comment, replyLength, link, href, sendReply, setSendR
       <div>
         {link ? (
           <Link href={href ? href : '/'}>
-            <p className='text-hover max-h-20 overflow-auto'>{comment.text}</p>
+            <p className={`text-hover overflow-auto ${maxH ? '' : 'max-h-20'}`}>{comment.text}</p>
           </Link>
         ) : (
-          <p className='max-h-20 overflow-auto'>{comment.text}</p>
+          <p className={`overflow-auto ${maxH ? '' : 'max-h-20'}`}>{comment.text}</p>
         )}
         <div className='flex justify-end items-center gap-6 mt-4'>
           <span className='flex gap-2 cursor-default'>
@@ -43,7 +44,7 @@ const BaseReply = ({ user, comment, replyLength, link, href, sendReply, setSendR
                 <FavoriteBorderIcon className='cursor-pointer' onClick={() => setLike(!like)} />
               </Tooltip>
             )}
-            {like ? `${comment.like + 1}` : comment.like}
+            {like ? `${Number(comment.like) + 1}` : comment.like}
           </span>
           <span className='flex gap-2 cursor-default'>
             <Tooltip title="Reply">

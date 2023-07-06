@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import ReplyBox from '@/components/comments/reply/box';
 import SendComment from '@/components/comments/sendComment/box';
 import BaseReply from '@/components/comments/reply/baseReply';
-import { IComment } from '@/models/comment';
+import { IComment, ICommentt, IReply, IUserInfo } from '@/models/comment';
+import ReplyBox from '../reply/box';
 
 interface IProps {
-  comment: IComment
+  comment: ICommentt
+  user: IUserInfo
+  reply: IReply[]
 }
-const BoxComment = ({ comment }: IProps) => {
+const BoxComment = ({ comment, user, reply }: IProps) => {
   const [like, setLike] = useState<boolean>(false)
   const [close, setClose] = useState<boolean>(false)
   const [activeSend, setActiveSend] = useState<boolean>(false)
@@ -19,11 +21,11 @@ const BoxComment = ({ comment }: IProps) => {
           <div className='max-w-3xl'>
 
             <div className='p-4 border-b'>
-              <BaseReply data={comment} link={false} sendReply={activeSend} setSendReply={setActiveSend} />
+              <BaseReply user={user} comment={comment} replyLength={reply.length} link={false} sendReply={activeSend} setSendReply={setActiveSend} maxH={true} />
             </div>
 
-            <div className='p-4 pb-20 pl-0'>
-              {comment.reply?.map((rep, index) => (
+            <div className='p-4 pb-20'>
+              {reply?.map((rep, index) => (
                 <ReplyBox key={index} data={rep} />
               ))}
             </div>

@@ -92,12 +92,14 @@ const Navbar = () => {
             <Toolbar disableGutters>
 
               {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-              <Image src={Logo} alt='Logo' width={30} height={30} className='mr-2 d-none d-md-flex' />
+              <Link href={'/'}>
+                <Image src={Logo} alt='Logo' width={30} height={30} className='mr-2 d-none d-md-flex' />
+              </Link>
               <Typography
+                onClick={() => router.push("/")}
                 variant="h6"
                 noWrap
                 component="a"
-                // href="/"
                 sx={{
                   mr: 2,
                   display: { xs: 'none', md: 'flex' },
@@ -114,6 +116,7 @@ const Navbar = () => {
                 <span className='textColorThem'>U</span>
                 NITY
               </Typography>
+
               <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                 <IconButton
                   size="large"

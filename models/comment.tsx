@@ -1,11 +1,11 @@
-interface IUser {
+export interface IUser {
   avatar: string
   username: string
 }
 interface ICommentNoReply {
   text: string
   user: IUser
-  like: number
+  like: string
 }
 interface One extends ICommentNoReply {
   reply: []
@@ -53,15 +53,9 @@ export interface IReply {
 } 
 
 export interface IReplyByUser extends IReply {
-  user: {
-    username: string
-    avatar: string
-  }
+  user: IUser
 }
 export interface IFullComment extends ICommentt {
-  user: {
-    username: string
-    avatar: string
-  },
+  user: IUser,
   reply: IReplyByUser[]
 }
