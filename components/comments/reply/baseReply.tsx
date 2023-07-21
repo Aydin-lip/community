@@ -16,8 +16,9 @@ interface IProps {
   sendReply: boolean
   setSendReply: Dispatch<SetStateAction<boolean>>
   maxH?: boolean
+  htmlFor?: string
 }
-const BaseReply = ({ user, comment, replyLength, link, href, sendReply, setSendReply, maxH }: IProps) => {
+const BaseReply = ({ user, comment, replyLength, link, href, sendReply, setSendReply, maxH, htmlFor }: IProps) => {
   const [like, setLike] = useState<boolean>(false)
   return (
     <>
@@ -47,9 +48,11 @@ const BaseReply = ({ user, comment, replyLength, link, href, sendReply, setSendR
             {like ? `${Number(comment.like) + 1}` : comment.like}
           </span>
           <span className='flex gap-2 cursor-default'>
-            <Tooltip title="Reply">
-              <ReplyIcon className='cursor-pointer' onClick={(() => setSendReply(!sendReply))} />
-            </Tooltip>
+            <label htmlFor={htmlFor ? htmlFor : ''}>
+              <Tooltip title="Reply">
+                <ReplyIcon className='cursor-pointer' onClick={(() => setSendReply(!sendReply))} />
+              </Tooltip>
+            </label>
             {replyLength > 0 && replyLength}
           </span>
         </div>

@@ -47,7 +47,7 @@ const UserOne = ({ info, comments, replys }: IProps) => {
                 replys={replys.filter(rep => rep.reply_token === comment.token)} />
             ))}
           </div>
-          
+
         </div>
       </div>
     </>
@@ -73,7 +73,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   await getInfoByUsernameId(username)
     .then(res => {
       user = res.data.user
-    })
+    }).catch(err => console.log(err))
 
   if (user.id === 0) {
     return {
@@ -84,11 +84,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
   await getCommentsByUsername(username)
     .then(res => {
       comments = res.data.comments
-    })
+    }).catch(err => console.log(err))
   await getAllReply()
     .then(res => {
       replys = res.data.reply
-    })
+    }).catch(err => console.log(err))
 
   return {
     props: {

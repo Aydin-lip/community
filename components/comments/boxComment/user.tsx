@@ -14,7 +14,7 @@ const BoxCommentUser = ({ comment, user, replys }: IProps) => {
 
   return (
     <>
-      <div className='max-w-3xl rounded-sm p-4 border border-neutral-500 bg-neutral-900 relative z-20 m-auto'>
+      <div className='max-w-3xl rounded-sm p-4 border border-neutral-500 bg-neutral-900 relative m-auto'>
         <BaseReply
           user={user}
           comment={comment}

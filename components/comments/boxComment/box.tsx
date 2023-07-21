@@ -10,8 +10,6 @@ interface IProps {
   reply: IReply[]
 }
 const BoxComment = ({ comment, user, reply }: IProps) => {
-  const [like, setLike] = useState<boolean>(false)
-  const [close, setClose] = useState<boolean>(false)
   const [activeSend, setActiveSend] = useState<boolean>(false)
 
   return (
@@ -21,7 +19,7 @@ const BoxComment = ({ comment, user, reply }: IProps) => {
           <div className='max-w-3xl'>
 
             <div className='p-4 border-b'>
-              <BaseReply user={user} comment={comment} replyLength={reply.length} link={false} sendReply={activeSend} setSendReply={setActiveSend} maxH={true} />
+              <BaseReply user={user} comment={comment} replyLength={reply.length} link={false} sendReply={activeSend} setSendReply={setActiveSend} maxH={true} htmlFor='sendReplyInput' />
             </div>
 
             <div className='p-4 pb-20'>
