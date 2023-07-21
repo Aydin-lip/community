@@ -39,7 +39,7 @@ export interface IUserInfo {
   birthday: string
   bio: string
   avatar: string
-  eamil: string
+  email: string
   phone: string
 }
 

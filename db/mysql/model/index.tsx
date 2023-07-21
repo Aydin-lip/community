@@ -14,7 +14,7 @@ export interface IUserInfo extends RowDataPacket {
   birthday: string
   bio: string
   avatar: string
-  eamil: string
+  email: string
   phone: string
 }
 export interface IComment extends RowDataPacket {

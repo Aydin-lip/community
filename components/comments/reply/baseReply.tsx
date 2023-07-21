@@ -5,11 +5,11 @@ import { Avatar, Tooltip } from '@mui/material';
 import Link from 'next/link';
 import { red } from '@mui/material/colors';
 import { useState, Dispatch, SetStateAction } from 'react';
-import { ICommentt } from '@/models/comment';
+import { ICommentt, IUserInfo } from '@/models/comment';
 
 interface IProps {
-  user: { username: string, avatar: string }
-  comment: { text: string, like: string }
+  user: Partial<IUserInfo>
+  comment: Partial<ICommentt>
   replyLength: number
   link: boolean
   href?: string
@@ -22,10 +22,10 @@ const BaseReply = ({ user, comment, replyLength, link, href, sendReply, setSendR
   return (
     <>
       <div className='flex items-center mb-4 gap-4'>
-        <Link href={'/user/aydin'}>
+        <Link href={`/user/${user.username}`}>
           <Avatar src={user.avatar} alt={user.username} />
         </Link>
-        <Link href={user.username}>{user.username}</Link>
+        <Link href={`/user/${user.username}`}>{user.username}</Link>
       </div>
       <div>
         {link ? (

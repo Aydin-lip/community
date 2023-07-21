@@ -23,7 +23,6 @@ import { useAppContext } from '@/context/state';
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const [login, setLogin] = useState<boolean>(false);
   const router = useRouter()
 
   let pages = [{
@@ -35,29 +34,7 @@ const Navbar = () => {
   }]
   let settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-  let context = useAppContext()
-  useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (token) {
-      getInfo()
-        .then(res => {
-          if (res?.status === 200) {
-            setLogin(true)
-            context?.user.setInfo(res.data.user)
-          }
-        })
-        .catch(err => {
-          if (err?.response?.status === 404) {
-            localStorage.removeItem("token")
-            router.replace("/login")
-          } else {
-            alert('Please try again in a few minutes.')
-          }
-        })
-    } else {
-      router.replace("/login")
-    }
-  }, [])
+  let { info, setInfo } = useAppContext()
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -146,7 +123,7 @@ const Navbar = () => {
                     display: { xs: 'block', md: 'none' },
                   }}
                 >
-                  {login && pages.map((page) => (
+                  {info.id !==0 && pages.map((page) => (
                     <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                       <Typography textAlign="center">
                         <Link href={`${page.href}`}>
@@ -184,7 +161,7 @@ const Navbar = () => {
                 NITY
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                {login && pages.map((page) => (
+                {info.id !==0 && pages.map((page) => (
                   <Link key={page.name} href={`${page.href}`} onClick={handleCloseNavMenu}>
                     <Button
                       sx={{ my: 2, color: 'white', display: 'block' }}
@@ -195,11 +172,11 @@ const Navbar = () => {
                 ))}
               </Box>
 
-              {login &&
+              {info.id !== 0 &&
                 <Box sx={{ flexGrow: 0 }}>
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar alt="Aydin" src="/image/avatar.png" />
+                      <Avatar alt={info.username} src={info.avatar} />
                     </IconButton>
                   </Tooltip>
                   <Menu

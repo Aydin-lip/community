@@ -30,7 +30,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
     reply = resultReply.data.reply
 
   } catch (err) {
-    console.log(err)
     return {
       notFound: true
     }

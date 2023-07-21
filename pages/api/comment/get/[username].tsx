@@ -31,7 +31,7 @@ const Handler: NextApiHandler = async (req, res) => {
       try {
         const results = await connection.query<IComment[]>(`SELECT * FROM comments WHERE id_user = '${userID}'`)
         if (!results[0][0]?.id) {
-          res.status(404).json({ message: "This user has no comments" })
+          res.status(400).json({ message: "This user has no comments" })
           return
         }
         res.status(200).json({ message: "Success", comments: results[0] })

@@ -30,8 +30,8 @@ const BoxComment = ({ comment, user, reply }: IProps) => {
               ))}
             </div>
 
-            <div className='fixed bottom-0 left-0 right-0 flex justify-center'>
-              <div className='max-w-xl w-full p-4'>
+            <div className='fixed bottom-0 right-1/2 translate-x-1/2 w-full sm:w-[36rem]'>
+              <div className='w-full p-4'>
                 <SendComment active={activeSend} setActive={setActiveSend} />
               </div>
             </div>

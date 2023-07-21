@@ -43,7 +43,7 @@ const SignIn = () => {
   const [login, setLogin] = useState<boolean>(false)
 
   const router = useRouter()
-  let context = useAppContext()
+  let { info, setInfo } = useAppContext()
 
   useEffect(() => {
     const token = localStorage.getItem("token")
@@ -68,7 +68,7 @@ const SignIn = () => {
           setLoading(false)
           setUsername("")
           setPassword("")
-          context?.user.setInfo(res.data.user)
+          setInfo(res.data.user)
           localStorage.setItem("token", res.data.user.token)
           router.replace('/')
           setTimeout(() => {
